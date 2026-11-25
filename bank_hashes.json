@@ -1,0 +1,54 @@
+[
+ {
+  "hash": "0ce04b0106d6d852207f9126900c5b9744c34e95e787449764129d5106e4d4ec",
+  "path": "a-glm/a_questions.json"
+ },
+ {
+  "hash": "1c2d79fa6fbb4dccee68fafbcf83b3fcec7e2b3ee0c944de4d2ce3043242828b",
+  "path": "b-moda/b_questions.json"
+ },
+ {
+  "hash": "eac8b041143a012188f7127d9099739b2e975add20ea7a74064d8a4daf03aebf",
+  "path": "long-tianyi/longtext_3tier.json"
+ },
+ {
+  "hash": "008f582ef06ef5315f10a085e5a6db63f01dc3bf66b0c9618d6d2a2266ae570c",
+  "path": "long-tianyi/contract_2wzi.txt"
+ },
+ {
+  "hash": "403a9d7f022d2e1e5f7200bef27e803a7bb73451f420e61f0ee766984c1da71d",
+  "path": "long-tianyi/summary_doc_50k.txt"
+ },
+ {
+  "hash": "2c001e79552ce4bdf84f9fd2740a93b661354953957b00cd213e73f58eefae87",
+  "path": "long-tianyi/needle_docs/needle_5k.txt"
+ },
+ {
+  "hash": "ea80d23ac4557a5f483c935c2a577d14a41d1e4c709b02d4d71460164508d5be",
+  "path": "long-tianyi/needle_docs/needle_20k.txt"
+ },
+ {
+  "hash": "10c932ba54d16c15b127e03c5d886dc1eb8c8c3a2c319d01db7d19b4d89fbfcf",
+  "path": "long-tianyi/needle_docs/needle_50k.txt"
+ },
+ {
+  "hash": "46db1e8e1f7b674dddb4bb7e940ce89cf6a2c3b2f593bdf0ca54431be2404e65",
+  "path": "long-tianyi/needle_docs/needle_100k.txt"
+ },
+ {
+  "hash": "220441c4b296a16b4566c8e768321154bbf64b6a3c1471db8c8a23ebced0fc4d",
+  "path": "tools-siliconflow/tools_10.json"
+ },
+ {
+  "hash": "1e9017ee639210caf4050a15c1cc7729d70fc470c458a63f1e4d2e504842225b",
+  "path": "tools-siliconflow/tools_schema.json"
+ },
+ {
+  "hash": "e211f721d73baffa660cbae19cdb358456bf1a9f223ebe353f03c17046279fb7",
+  "path": "mahjong-openrouter/mahjong_rules.json"
+ },
+ {
+  "hash": "d66d80b6713d8169da00c22b39d37a461703d4445ce4bd8cf6682e813df39d76",
+  "path": "mahjong-openrouter/tile_deck.json"
+ }
+]

@@ -1,97 +1,181 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>大模型性能排行榜 — P1 社区（kilo-auto/free 前端）</title>
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大模型性能测评 · P1 榜单</title>
 <style>
-  * { box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans SC", sans-serif; margin: 0; background: #f5f7fa; color: #1a1a1a; }
-  header { background: #0f172a; color: #fff; padding: 16px 20px; text-align: center; }
-  header h1 { font-size: 18px; margin: 0 0 4px; letter-spacing: 0.5px; }
-  header p { font-size: 13px; opacity: 0.85; margin: 0; }
-  .container { max-width: 1100px; margin: 20px auto; padding: 0 16px; display: grid; grid-template-columns: 340px 1fr; gap: 20px; }
-  @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
-  .card { background: #fff; border-radius: 10px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-  .card h2 { font-size: 15px; margin: 0 0 12px; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; }
-  .card h3 { font-size: 13px; margin: 10px 0 6px; color: #374151; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #f0f2f5; }
-  th { color: #6b7280; font-weight: 600; white-space: nowrap; }
-  tr:hover td { background: #f9fafb; }
-  .sponsor { background: #fffbeb; border-left: 3px solid #d97706; }
-  .tag-sponsor { font-size: 11px; background: #f59e0b; color: #fff; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
-  .tag-sample { font-size: 11px; background: #e5e7eb; color: #374151; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
-  .neutral { color: #6b7280; font-size: 12px; margin-top: 4px; }
-  .hash-box { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; background: #f3f4f6; padding: 8px 10px; border-radius: 6px; word-break: break-all; margin-top: 6px; }
-  .radar-wrap { position: relative; width: 100%; height: 320px; }
-  canvas#radar { width: 100%; height: 100%; display: block; }
-  .legend { display: flex; gap: 14px; margin-top: 8px; font-size: 12px; }
-  .legend span { display: flex; align-items: center; gap: 5px; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-  .muted { color: #6b7280; font-size: 12px; }
-  .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
-  @media (max-width: 640px) { .dual { grid-template-columns: 1fr; } }
+:root{--bg:#0b0e14;--card:#141a28;--line:#242c3f;--txt:#e9edf5;--sub:#8b93a7;--acc:#4f8cff;--acc2:#2dd4bf;--warn:#f59e0b;--purple:#c084fc;--green:#4ade80;--red:#f87171}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.65}
+.wrap{max-width:900px;margin:0 auto;padding:22px 16px 70px}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.logo{font-size:21px;font-weight:800}
+.logo b{color:var(--acc)}
+.hashchip{font:11px ui-monospace,SFMono-Regular,monospace;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--sub)}
+.hero{background:linear-gradient(135deg,#101828 0%,#0b0e14 70%);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;margin-bottom:16px}
+.hero h1{font-size:24px;font-weight:800;letter-spacing:.5px}
+.hero p{color:var(--sub);font-size:13px;margin-top:6px}
+.pill{display:inline-block;background:rgba(79,140,255,.15);color:var(--acc);border:1px solid rgba(79,140,255,.35);border-radius:999px;font-size:11px;padding:2px 10px;margin-right:6px;margin-top:8px}
+.pill.amber{background:rgba(245,158,11,.12);color:var(--warn);border-color:rgba(245,158,11,.35)}
+h2{font-size:15px;font-weight:700;color:var(--sub);letter-spacing:1px;margin:26px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;transition:border-color .15s}
+.card:hover{border-color:var(--acc)}
+.card .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card .name{font-size:14px;font-weight:700;word-break:break-all}
+.badge{font-size:10px;color:var(--warn);border:1px solid rgba(245,158,11,.4);border-radius:6px;padding:1px 6px;flex-shrink:0}
+.score-line{display:flex;align-items:baseline;gap:6px;margin:8px 0 4px}
+.score-line .big{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums}
+.score-line .of{color:var(--sub);font-size:12px}
+.bar{height:6px;background:#1c2436;border-radius:4px;overflow:hidden;margin:5px 0}
+.bar i{display:block;height:100%;border-radius:4px}
+.dims{font-size:11px;color:var(--sub)}
+.dims div{display:flex;justify-content:space-between}
+.dims b{font-weight:600;color:var(--txt);font-variant-numeric:tabular-nums}
+.scen{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.scen span{font-size:11px;background:#1a2132;border:1px solid var(--line);border-radius:8px;padding:3px 8px;color:var(--sub)}
+.scen b{color:var(--txt);font-variant-numeric:tabular-nums}
+.free{margin-top:10px;font-size:12px;color:var(--acc2)}
+.free b{font-size:16px}
+.quirk{font-size:11px;color:var(--sub);margin-top:6px;opacity:.8}
+.radar-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+canvas{display:block;width:100%;max-width:420px;margin:0 auto;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px;font-size:12px;color:var(--sub)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.tabs{display:flex;gap:8px;margin:26px 0 12px}
+.tabs button{flex:1;background:var(--card);color:var(--sub);border:1px solid var(--line);border-radius:10px;padding:9px;font-size:13px;font-weight:600;cursor:pointer}
+.tabs button.on{color:var(--txt);border-color:var(--acc);background:rgba(79,140,255,.1)}
+.ranks{list-style:none;counter-reset:r}
+.ranks li{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-bottom:8px;font-size:13px}
+.ranks .no{width:22px;height:22px;flex-shrink:0;display:grid;place-items:center;border-radius:8px;background:#1a2132;font-size:12px;font-weight:700;color:var(--sub)}
+.ranks li:nth-child(1) .no{background:rgba(245,158,11,.2);color:var(--warn)}
+.ranks li:nth-child(2) .no{background:rgba(148,163,184,.2);color:#cbd5e1}
+.ranks li:nth-child(3) .no{background:rgba(180,83,9,.25);color:#d99a4e}
+.ranks .rn{font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ranks .rv{font-variant-numeric:tabular-nums;color:var(--sub);font-size:12px}
+.empty{color:var(--sub);font-size:13px;padding:20px;text-align:center;border:1px dashed var(--line);border-radius:12px}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:12px;color:var(--sub)}
+footer p{margin-bottom:4px}
+a{color:var(--acc);text-decoration:none}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.hero h1{font-size:20px}}
 </style>
+</head>
 <body>
+<div class="wrap">
 <header>
-  <h1>大模型性能排行榜 — P1 社区</h1>
-  <p>六维分 · 四场景分 · 白嫖分 · 题库榜 + 社区榜双轨 · 题库 hash 公示 · 赞助位不进分</p>
+  <div class="logo">大模型性能<b>测评</b> · P1</div>
+  <div class="hashchip" id="bankhash">bank: 待公示</div>
 </header>
-<div class="container">
-  <aside>
-    <div class="card">
-      <h2>模型总览</h2>
-      <div id="model-list" class="muted">加载中…</div>
-    </div>
-    <div class="card">
-      <h2>中立五规（站的生命线）</h2>
-      <ol style="font-size:12px; color:#4b5563; line-height:1.6; padding-left: 18px;">
-        <li>题库密封，只公开 hash + 题型说明 + 结果</li>
-        <li>judge 模型、温度、采样数、rubric 永久公示</li>
-        <li>每轮全批重跑（老+新同题），跨轮分数可比</li>
-        <li>赞助/广告位显式标注「赞助」，不进任何分数</li>
-        <li>评测脚本开源可复现，题库本身不出售</li>
-      </ol>
-    </div>
-  </aside>
 
-  <main>
-    <div class="card">
-      <h2>六维雷达图</h2>
-      <div class="radar-wrap"><canvas id="radar"></canvas></div>
-      <div class="legend" id="radar-legend"></div>
-      <p class="muted">六维：D1 指令遵循 · D2 推理与代码 · D3 长上下文 · D4 工具调用 · D5 速度与稳定 · D6 性价比。数据均来自本地 models.json（§4 schema）。</p>
-    </div>
-
-    <div class="card">
-      <h2>模型分详情</h2>
-      <div id="scores-table" class="muted">加载中…</div>
-    </div>
-
-    <div class="dual">
-      <div class="card">
-        <h2>题库榜</h2>
-        <div id="bank-leaderboard" class="muted">加载中…</div>
-      </div>
-      <div class="card">
-        <h2>社区榜</h2>
-        <div id="arena-leaderboard" class="muted">加载中…</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>题库 hash 公示</h2>
-      <div id="bank-hash" class="hash-box">—</div>
-      <p class="muted">按 §1 / §5 规则：题库本身不出售，只公开 sha256 hash + 题型说明 + 结果，便于复核。</p>
-    </div>
-
-    <div class="card sponsor">
-      <h2 style="display:flex;align-items:center;gap:8px;">赞助位 <span class="tag-sponsor">赞助</span></h2>
-      <p class="muted">此处为赞助/广告位，按中立五规第 4 条显式标注「赞助」，不进入任何分数计算，与六维/场景/白嫖分完全中立。</p>
-      <div id="sponsor-slot" style="border:1px dashed #cbd5e1; border-radius:6px; padding:14px; text-align:center; color:#6b7280; font-size:12px;">赞助位（示例：厂商邀请赛 / 赛季冠名位预留）</div>
-    </div>
-  </main>
+<div class="hero">
+  <h1>中立第三方大模型六维测评</h1>
+  <p>分数永远按题库出，赞助不进分。题库密封，只公示 hash + 题型说明 + 结果。</p>
+  <div>
+    <span class="pill">六维 0–100</span>
+    <span class="pill">3 轮采样取中位</span>
+    <span class="pill">双 judge 交叉</span>
+    <span class="pill amber" id="datanote">示例数据 · 真实评测跑批中</span>
+  </div>
 </div>
-<script src="app.js"></script>
+
+<h2>模型卡</h2>
+<div class="grid" id="cards"><div class="empty">models.json 加载中…</div></div>
+
+<h2>六维雷达</h2>
+<div class="radar-box">
+  <canvas id="radar" width="420" height="420"></canvas>
+  <div class="legend" id="legend"></div>
+</div>
+
+<div class="tabs">
+  <button class="on" data-t="bank">题库榜（严肃分）</button>
+  <button data-t="arena">社区榜（对战胜率）</button>
+</div>
+<ul class="ranks" id="ranks"></ul>
+
+<footer>
+  <p><b>中立五规</b>：① 题库密封只公示 hash ② judge/温度/采样/rubric 永久公示 ③ 每轮全批重跑跨轮可比 ④ 赞助位显式标注不进分 ⑤ 评测脚本开源可复现</p>
+  <p>判官：Judge 1 = aiping/GLM-4.7-Flash（主审）· Judge 2 = 魔搭/DeepSeek-V4.1-Flash（交叉审）｜ <a href="bank.html">题库 hash 公示页 →</a></p>
+  <p id="updated"></p>
+</footer>
+</div>
+
+<script>
+const DIMS=[["d1","指令",20],["d2","推理代码",25],["d3","长上下文",10],["d4","工具调用",20],["d5","速度稳定",10],["d6","性价比",15]];
+const SCEN=[["writing","写作"],["coding","编程"],["agent","Agent"],["freeride","白嫖"]];
+const COLORS=["#4f8cff","#2dd4bf","#c084fc","#f59e0b","#f87171","#4ade80","#fb923c","#a3e635"];
+function el(h){const d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild}
+function bar(w){return `<div class="bar"><i style="width:${Math.max(2,Math.min(100,w))}%;background:${COLORS[0]}"></i></div>`}
+async function init(){
+  let d;
+  try{const r=await fetch('models.json',{cache:'no-store'});d=await r.json()}catch(e){document.getElementById('cards').innerHTML='<div class="empty">models.json 读取失败（需通过 HTTP 访问本站）</div>';return}
+  const ms=(d.models||d).filter(m=>m.id);
+  const allSample=ms.length>0&&ms.every(m=>m.sample===true);
+  document.getElementById('datanote').textContent=allSample?'示例数据 · 真实评测跑批后自动更新':'实时数据 · '+new Date().toLocaleDateString('zh-CN');
+  document.getElementById('bankhash').textContent='bank: '+(d.bank_hash?String(d.bank_hash).slice(0,10)+'…':'待公示');
+  document.getElementById('updated').textContent='数据更新：'+(ms[0]&&ms[0].last_eval?ms[0].last_eval:'—')+' · hash '+(d.bank_hash||'—').slice(0,16);
+  // cards
+  const box=document.getElementById('cards');box.innerHTML='';
+  ms.forEach(m=>{
+    const dims=(m.six_dims||{});
+    const drows=DIMS.map(([k,n])=>`<div><span>${n} · ${k}</span><b>${dims[k]!=null?dims[k]:'—'}</b></div>`).join('');
+    const scen=(m.scenario||{});
+    const srows=SCEN.map(([k,n])=>`<span>${n} <b>${scen[k]!=null?scen[k]:'—'}</b></span>`).join('');
+    const q=(m.free_tier&&m.free_tier.quirks||[]).join(' · ');
+    box.appendChild(el(`<div class="card">
+      <div class="top"><div class="name">${m.id}</div>${m.sample?'<span class="badge">示例</span>':''}</div>
+      <div class="score-line"><span class="big" style="color:${COLORS[0]}">${dims.d2!=null?dims.d2:'—'}</span><span class="of">推理代码（权重最高维）</span></div>
+      <div class="dims">${drows}</div>
+      <div class="scen">${srows}</div>
+      ${m.freeride!=null||dims.d6!=null?`<div class="free">白嫖分 <b>${m.freeride!=null?m.freeride:dims.d6}</b></div>`:''}
+      ${m.price_in==0&&m.price_out==0?'<div class="free">免费额度：'+(m.free_tier&&m.free_tier.limit?m.free_tier.limit:'有')+'</div>':''}
+      ${q?`<div class="quirk">quirks：${q}</div>`:''}</div>`)
+  });
+  // radar
+  drawRadar(ms);
+  // ranks
+  renderRanks('bank',ms);
+  document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    renderRanks(b.dataset.t,ms);
+  });
+}
+function capScore(m){const d=m.six_dims||{};const t=(d.d1||0)*.2+(d.d2||0)*.25+(d.d3||0)*.1+(d.d4||0)*.2;return Math.round(t*10)/10}
+function renderRanks(t,ms){
+  const ul=document.getElementById('ranks');ul.innerHTML='';
+  let items;
+  if(t==='bank') items=ms.map(m=>({n:m.id,v:capScore(m),s:'加权 0–100'}));
+  else items=ms.filter(m=>(m.arena_wins??0)+(m.arena_losses??0)>0).map(m=>({n:m.id,v:Math.round(m.arena_wins/((m.arena_wins||0)+(m.arena_losses||0))*100),s:`${m.arena_wins}胜 ${m.arena_losses}负`}));
+  items.sort((a,b)=>b.v-a.v);
+  if(!items.length){ul.innerHTML=`<li class="empty" style="border:none;background:none">${t==='arena'?'社区榜待 P2 斗法开赛后累计（100 局进榜）':'暂无模型数据'}</li>`;return}
+  items.forEach((it,i)=>ul.appendChild(el(`<li><span class="no">${i+1}</span><span class="rn">${it.n}</span><span class="rv">${it.v} <small>${it.s}</small></span></li>`)))
+}
+function drawRadar(ms){
+  const c=document.getElementById('radar'),x=c.getContext('2d');
+  const S=c.width,cx=S/2,cy=S/2,R=S*0.34;
+  x.clearRect(0,0,S,S);
+  const ang=i=>-Math.PI/2+i*Math.PI/3;
+  x.font='12px sans-serif';
+  for(let ring=1;ring<=4;ring++){
+    x.beginPath();
+    for(let i=0;i<=6;i++){const a=ang(i%6),r=R*ring/4;i?x.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):x.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a))}
+    x.strokeStyle=ring===4?'#242c3f':'#1c2436';x.lineWidth=1;x.stroke();
+  }
+  x.fillStyle='#8b93a7';
+  DIMS.forEach(([k,n])=>{const a=ang(DIMS.indexOf([k,n]));const r=R*1.14;
+    x.fillText(`${n} ${k}`,cx+r*Math.cos(a)-(n.length*6),cy+r*Math.sin(a)+4)});
+  ms.slice(0,4).forEach((m,mi)=>{
+    const d=m.six_dims||{};
+    x.beginPath();
+    DIMS.forEach(([k],i)=>{const v=(d[k]||0)/100,a=ang(i);i?x.lineTo(cx+R*v*Math.cos(a),cy+R*v*Math.sin(a)):x.moveTo(cx+R*v*Math.cos(a),cy+R*v*Math.sin(a))});
+    x.closePath();
+    x.fillStyle=COLORS[mi]+'26';x.fill();
+    x.strokeStyle=COLORS[mi];x.lineWidth=2;x.stroke();
+  });
+  document.getElementById('legend').innerHTML=ms.slice(0,4).map((m,i)=>`<span><i style="background:${COLORS[i]}"></i>${m.id}</span>`).join('');
+}
+init();
+</script>
 </body>
 </html>

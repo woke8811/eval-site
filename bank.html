@@ -1,29 +1,76 @@
-<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>题库 hash 公示 · 大模型性能测评社区</title>
-<style>body{font-family:system-ui,sans-serif;max-width:860px;margin:24px auto;padding:0 16px;line-height:1.6}
-pre{background:#0d1117;color:#7ee787;padding:14px;border-radius:8px;font-size:12px;overflow-x:auto}
-code{background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:13px}h1{font-size:22px}small{color:#666}</style></head>
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>题库 hash 公示 · 大模型性能测评</title>
+<style>
+:root{--bg:#0b0e14;--card:#141a28;--line:#242c3f;--txt:#e9edf5;--sub:#8b93a7;--acc:#4f8cff;--green:#4ade80;--warn:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+.wrap{max-width:720px;margin:0 auto;padding:22px 16px 60px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.logo{font-size:19px;font-weight:800}
+.logo b{color:var(--acc)}
+a.back{font-size:12px;color:var(--acc);text-decoration:none}
+h1{font-size:22px;font-weight:800;margin-bottom:4px}
+.sub{color:var(--sub);font-size:13px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card h2{font-size:14px;font-weight:700;color:var(--sub);letter-spacing:1px;margin-bottom:10px}
+pre{background:#0d1117;border:1px solid var(--line);border-radius:10px;padding:12px;font:11px/1.8 ui-monospace,SFMono-Regular,monospace;color:var(--green);overflow-x:auto;white-space:pre}
+ul{padding-left:18px;font-size:13px}
+li{margin-bottom:6px}
+li b{color:var(--txt)}
+li span{color:var(--sub)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.rules div{background:#101828;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--sub)}
+.rules b{display:block;color:var(--txt);font-size:12px;margin-bottom:2px}
+.note{font-size:12px;color:var(--warn);margin-top:10px}
+code{background:#1a2132;border-radius:5px;padding:1px 6px;font-size:12px;color:var(--acc)}
+</style>
+</head>
 <body>
+<div class="wrap">
+<header>
+  <div class="logo">大模型性能<b>测评</b> · P1</div>
+  <a class="back" href="index.html">← 排行榜</a>
+</header>
 <h1>题库 hash 公示</h1>
-<p>中立五规第 1 条：题库密封，只公开 hash + 题型说明 + 结果。本页 sha256 与 <code>/models.json</code> 的 <code>bank_hash</code> 字段对应，任何人可复算校验。</p>
-<h2>判官公示（五规第 2 条）</h2>
-<ul><li>Judge 1（主审）：<code>aiping / GLM-4.7-Flash</code></li>
-<li>Judge 2（交叉审）：<code>魔搭 / DeepSeek-V4.1-Flash</code>（429 误报频繁则换 <code>硅基 / XingChenAGI-Xing4.0-29B</code>）</li>
-<li>温度 0，采样 3 轮取中位；双 judge 分歧 &gt;30 分 → 该题作废换替补题</li></ul>
-<h2>题库 sha256（2026-11-25 定稿）</h2>
-<pre>0ce04b0106d6d852207f9126900c5b9744c34e95e787449764129d5106e4d4ec  a-glm/a_questions.json
-1c2d79fa6fbb4dccee68fafbcf83b3fcec7e2b3ee0c944de4d2ce3043242828b  b-moda/b_questions.json
-eac8b041143a012188f7127d9099739b2e975add20ea7a74064d8a4daf03aebf  long-tianyi/longtext_3tier.json
-008f582ef06ef5315f10a085e5a6db63f01dc3bf66b0c9618d6d2a2266ae570c  long-tianyi/contract_2wzi.txt
-403a9d7f022d2e1e5f7200bef27e803a7bb73451f420e61f0ee766984c1da71d  long-tianyi/summary_doc_50k.txt
-2c001e79552ce4bdf84f9fd2740a93b661354953957b00cd213e73f58eefae87  long-tianyi/needle_docs/needle_5k.txt
-ea80d23ac4557a5f483c935c2a577d14a41d1e4c709b02d4d71460164508d5be  long-tianyi/needle_docs/needle_20k.txt
-10c932ba54d16c15b127e03c5d886dc1eb8c8c3a2c319d01db7d19b4d89fbfcf  long-tianyi/needle_docs/needle_50k.txt
-46db1e8e1f7b674dddb4bb7e940ce89cf6a2c3b2f593bdf0ca54431be2404e65  long-tianyi/needle_docs/needle_100k.txt
-220441c4b296a16b4566c8e768321154bbf64b6a3c1471db8c8a23ebced0fc4d  tools-siliconflow/tools_10.json
-1e9017ee639210caf4050a15c1cc7729d70fc470c458a63f1e4d2e504842225b  tools-siliconflow/tools_schema.json
-e211f721d73baffa660cbae19cdb358456bf1a9f223ebe353f03c17046279fb7  mahjong-openrouter/mahjong_rules.json
-d66d80b6713d8169da00c22b39d37a461703d4445ce4bd8cf6682e813df39d76  mahjong-openrouter/tile_deck.json</pre>
-<p><small>题型说明：A 指令遵循 12 题（10+2 替补）｜ B 代码/数学/知识 22 题（含 2 替补）｜ C 长文：找针 8 + 摘要 10 要点 + 合同 5 ｜ 工具 10 题 ｜ P2 麻将赛制层。赞助位显式标注「赞助」，不进任何分数（五规第 4 条）。</small></p>
-<p><a href="/index.html">← 排行榜</a></p>
-</body></html>
+<p class="sub">中立五规第 1 条：题库密封，只公开 hash + 题型说明 + 结果。任何人可用 sha256 复算校验。</p>
+
+<div class="card">
+  <h2>题库 sha256（2026-11-25 定稿）</h2>
+  <pre id="hashes">加载中…</pre>
+</div>
+
+<div class="card">
+  <h2>判官与判分公示（五规第 2 条）</h2>
+  <ul>
+    <li><b>Judge 1（主审）</b> <span>· aiping / GLM-4.7-Flash，温度 0</span></li>
+    <li><b>Judge 2（交叉审）</b> <span>· 魔搭 / DeepSeek-V4.1-Flash（429 误报频繁则换 硅基 / XingChenAGI-Xing4.0-29B）</span></li>
+    <li><b>采样</b> <span>· 每题 3 轮取中位；双 judge 分歧 &gt;30 分 → 该题作废换替补题</span></li>
+    <li><b>场景权重</b> <span>· 写作 40/10/15/5/15/15 · 编程 15/45/10/15/5/10 · Agent 10/15/10/45/15/5 · 白嫖 门槛 D2≥60 后按 D6</span></li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>题型说明</h2>
+  <ul>
+    <li><b>A 指令遵循</b> <span>· 12 题（10 + 2 替补），逐约束机检，得分 = 满足约束数 / 总约束数 × 100</span></li>
+    <li><b>B 推理与代码</b> <span>· 22 题 = 数学 8 + 代码 8 + 中文知识幻觉 4 + 替补 2；代码沙箱执行内置单测</span></li>
+    <li><b>C 长上下文</b> <span>· 找针 8（5k/20k/50k/100k 各 2 针）+ 摘要 10 要点 + 合同 2 万字 5 抽取</span></li>
+    <li><b>工具调用</b> <span>· 10 道多步任务（2–5 次调用 + 干扰工具），hard pass/fail，得分 = 成功率×70 + 参数准确率×30</span></li>
+    <li><b>P2 赛制层</b> <span>· 麻将桌：四人桌 13 张起、144 张固定牌组、每步 1 次 LLM 决策（测规划力非手速）</span></li>
+  </ul>
+  <p class="note">赞助位一律显式标注「赞助」，不进任何分数（五规第 4 条）。评测脚本开源可复现，题库本身不出售（五规第 5 条）。</p>
+</div>
+
+<script>
+fetch('bank_hashes.json').then(r=>r.json()).then(d=>{
+  document.getElementById('hashes').textContent=(Array.isArray(d)?d:d.files||[]).map(f=>
+    typeof f==='string'?f:`${f.hash||f.sha256||''}  ${f.path||f.file||''}`).join('\n')
+}).catch(()=>{document.getElementById('hashes').textContent='（hash 文件待生成：merged/bank_hashes.txt）'});
+</script>
+</div>
+</body>
+</html>
