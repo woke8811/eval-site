@@ -1,0 +1,95 @@
+{
+  "bank_hash": "sha256:placeholder-bank-hash-0000000000000000000000000000000000000000000000000000",
+  "models": [
+    {
+      "id": "aiping/GLM-4.7-Flash",
+      "price_in": 0.0,
+      "price_out": 0.0,
+      "free_tier": {
+        "limit": "每日 100 万 tokens（免费档）",
+        "quota": "TPM 60 / RPM 30",
+        "quirks": ["429 误报识别"]
+      },
+      "six_dims": {
+        "d1": 82,
+        "d2": 71,
+        "d3": 64,
+        "d4": 77,
+        "d5": 88,
+        "d6": 92
+      },
+      "scenario": {
+        "writing": 78,
+        "coding": 74,
+        "agent": 80,
+        "freeride": 95
+      },
+      "arena_wins": 41,
+      "arena_losses": 22,
+      "last_eval": "2026-11-25",
+      "bank_hash": "sha256:placeholder-bank-hash-0000000000000000000000000000000000000000000000000000",
+      "judge": "aiping/GLM-4.7-Flash",
+      "sample": true
+    },
+    {
+      "id": "modao/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "price_in": 0.0,
+      "price_out": 0.0,
+      "free_tier": {
+        "limit": "魔粒免费额度（见 §6）",
+        "quota": "TPM 30 / RPM 15",
+        "quirks": ["429 insufficient balance = 限流误报（非余额问题）"]
+      },
+      "six_dims": {
+        "d1": 75,
+        "d2": 88,
+        "d3": 70,
+        "d4": 69,
+        "d5": 82,
+        "d6": 90
+      },
+      "scenario": {
+        "writing": 70,
+        "coding": 84,
+        "agent": 72,
+        "freeride": 88
+      },
+      "arena_wins": 33,
+      "arena_losses": 19,
+      "last_eval": "2026-11-25",
+      "bank_hash": "sha256:placeholder-bank-hash-0000000000000000000000000000000000000000000000000000",
+      "judge": "modao/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "sample": true
+    },
+    {
+      "id": "openrouter/nvidia/nemotron-3.5-super-vl:free",
+      "price_in": 0.0,
+      "price_out": 0.0,
+      "free_tier": {
+        "limit": "OpenRouter free 层",
+        "quota": "按模型每日额度",
+        "quirks": ["503 轮转"]
+      },
+      "six_dims": {
+        "d1": 68,
+        "d2": 66,
+        "d3": 60,
+        "d4": 80,
+        "d5": 75,
+        "d6": 95
+      },
+      "scenario": {
+        "writing": 65,
+        "coding": 60,
+        "agent": 82,
+        "freeride": 92
+      },
+      "arena_wins": 28,
+      "arena_losses": 26,
+      "last_eval": "2026-11-25",
+      "bank_hash": "sha256:placeholder-bank-hash-0000000000000000000000000000000000000000000000000000",
+      "judge": "modao/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "sample": true
+    }
+  ]
+}
